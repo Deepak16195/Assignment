@@ -46,4 +46,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.google.android.exoplayer:exoplayer:2.13.2'
     implementation 'io.realm:android-adapters:2.1.1'
+    implementation 'com.google.android.exoplayer:extension-mediasession:2.10.8'
 }

@@ -31,6 +31,7 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.DataView
         holder.setViewModel(new DataItemViewModel(dataModel));
         Log.d("Data", "onBindViewHolder: " + dataModel.getName());
         dataModel.setSelected(true);
-        holder.setExoplayer(data.get(position).getVideo_path());
+        holder.setExoplayer(data.get(position).getVideo_path(),mContext);
 
     }
 
@@ -124,12 +125,15 @@ public class MyVideoAdapter extends RecyclerView.Adapter<MyVideoAdapter.DataView
             player.setPlayWhenReady(false);
             player.getPlaybackState();
         }
-        public void setExoplayer(String url) {
+        public void setExoplayer(String url,Context mContext) {
             player = new SimpleExoPlayer.Builder(itemView.getContext()).build();
             player.setRepeatMode(player.REPEAT_MODE_ONE);
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(itemView.getContext(), Util.getUserAgent(itemView.getContext(), "com.example.assignment"));
+           /* DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(itemView.getContext(), Util.getUserAgent(itemView.getContext(), "com.example.assignment"));
             MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(ShareUtils.getUri(itemView.getContext(), url));
-            player.prepare(videoSource);
+            */  DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(mContext, Util.getUserAgent(mContext, mContext.getString(R.string.app_name)), bandwidthMeter);
+            MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(url));
+            player.prepare(mediaSource);
             playerView.setPlayer(player);
             player.seekTo(mWhenPauseTime);
         }

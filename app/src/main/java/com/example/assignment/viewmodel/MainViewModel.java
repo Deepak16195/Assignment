@@ -42,6 +42,7 @@ public class MainViewModel extends BaseObservable {
         column_id = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID);
         thum = cursor.getColumnIndexOrThrow(MediaStore.Video.Thumbnails.DATA);
         RealmResults<History> bookMarks = realm.where(History.class).findAll();
+        int i =1;
         while (cursor.moveToNext()) {
             absolutePathOfImage = cursor.getString(column_index_data);
             Log.e("Column", absolutePathOfImage);
@@ -59,7 +60,24 @@ public class MainViewModel extends BaseObservable {
                     }
                 }
             }
-            obj_model.setVideo_path(absolutePathOfImage);
+            i++;
+            obj_model.setVideo_path("https://res.cloudinary.com/softsimplicity/video/upload/v1615396892/assets/video/2021-03-10-awAKExDlr_a3ulmk.mkv");
+            if(i == 1)
+            {
+                obj_model.setVideo_path("https://res.cloudinary.com/softsimplicity/video/upload/v1615396892/assets/video/2021-03-10-awAKExDlr_a3ulmk.mkv");
+            }
+            if(i == 2)
+            {
+                obj_model.setVideo_path("https://res.cloudinary.com/softsimplicity/video/upload/v1615397262/assets/video/2021-03-09-EsAyZ1Zx7_lcznso.mkv");
+            }
+            if(i == 3)
+            {
+                obj_model.setVideo_path("https://res.cloudinary.com/softsimplicity/video/upload/v1615397308/assets/video/2021-03-10-Ax7RxRorO_xsyfsw.mkv");
+            }
+            if(i == 4)
+            {
+                obj_model.setVideo_path("https://res.cloudinary.com/softsimplicity/video/upload/v1615397373/assets/video/2021-03-09-6JIGLnx5U_ymraah.mkv");
+            }
             obj_model.setVideo_thumb(column_id + ""); //cursor.getString(thum)
             data.add(obj_model);
         }
